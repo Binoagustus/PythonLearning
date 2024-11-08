@@ -1,0 +1,6 @@
+pip install python-dotenv 
+is installed to use a seperate file as env file
+
+
+
+SQLDatabaseChain is used to create query and send response  
