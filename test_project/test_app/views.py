@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .serializers import UploadSerializer, StringInputSerializer
 from .utils import get_pdf_text, get_text_chunks, get_embeddings, insert_embedding,similarity_search, get_query_embedding
 from .groq_llm import call_chain
+from langchain_community.vectorstores.pgvector import PGVector
+from .rag import rag_query
 
 # ViewSets define the view behavior.
 class UploadViewSet(ViewSet):
@@ -28,8 +30,7 @@ class UploadViewSet(ViewSet):
         serializer = StringInputSerializer(data=request.data)
         if serializer.is_valid():
             input_string = serializer.validated_data['input_string']
-            query_embedding = get_query_embedding(input_string)
-            results = similarity_search(query_embedding)
-            content = call_chain(results,input_string)
+            retrieved_docs = rag_query(input_string)
+            content = call_chain(retrieved_docs,input_string)
             response = content.replace('\n', ' ').strip()
             return Response({"results": response})

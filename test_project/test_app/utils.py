@@ -79,16 +79,6 @@ def insert_embedding(text_chunks, embedding_list):
                 VALUES (%s, %s::vector);
             """, (text_chunk, embedding))  # embedding should be 1-D
         conn.commit()
-
-def similarity_search(query_embedding):
-    """Similarity search with user query"""
-    with conn.cursor() as cursor:
-        cursor.execute("""
-        SELECT content, embedding <-> %s::vector AS similarity
-        FROM pdf_chunks
-        """, (query_embedding,))
-        results = cursor.fetchall()
-        return results
       
 def get_query_embedding(input_string):
     """Query embedding for user input"""  
