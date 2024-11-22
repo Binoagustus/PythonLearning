@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UploadSerializer, StringInputSerializer
-from .utils import get_pdf_text, get_text_chunks, get_embeddings, insert_embedding,similarity_search, get_query_embedding
+from .utils import get_pdf_text, get_text_chunks, get_embeddings, insert_embedding
 from .groq_llm import call_chain
 from langchain_community.vectorstores.pgvector import PGVector
 from .rag import rag_query
